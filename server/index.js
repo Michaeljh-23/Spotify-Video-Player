@@ -1,30 +1,19 @@
 const express = require('express');
-//const path = require('path')
-const axios = require('axios');
 const morgan = require('morgan');
-const spotify = require('../config.js');
-
+const routes = require('./controller')
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
 
-app.get('/token', (req, res) => {
-  console.log('getting token')
-  axios('https://accounts.spotify.com/api/token', {
-      headers: {
-        'Content-Type' : 'application/x-www-form-urlencoded',
-        'Authorization' : 'Basic ' + Buffer.from(spotify.ClientId + ':' + spotify.ClientSecret).toString('base64')
-      },
-      data: 'grant_type=client_credentials',
-      method: 'POST'
-    })
-    .then(tokenResponse => {
-      res.send(tokenResponse.data.access_token);
-    })
-    .catch(err => {
-      res.send(err)
-    })
-});
+app.use(routes);
+
+app.use(cors({
+  origin: 'https://localhost3455',
+  methods: ['GET'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  maxAge: 600
+}));
 
 app.use(express.static(__dirname + '/../dist'));
 
