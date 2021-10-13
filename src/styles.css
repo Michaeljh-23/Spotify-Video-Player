@@ -2,3 +2,257 @@ h1 {
   color: white;
   background-color: black;
 }
+html{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-image: url("https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.spacetelescope.org%2Farchives%2Fimages%2Fscreen%2Fpotw1209a.jpg&f=1&nofb=1");
+  padding: 0;
+}
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: fill;
+}
+.appwrap {
+border-style: solid;
+border-color: black;
+background-color: rgb(199, 199, 199);
+position: absolute;
+top: 15%;
+left: 15%;
+margin: auto;
+height: 70%;
+width: 70%;
+}
+#Genres {
+  margin-right: 30px;
+  margin-top: 20px;
+  margin-left: 5px;
+  position: relative;
+  border-style: solid;
+  border-color: black;
+  float: right;
+  height: 350px;
+  width: 300px;
+  overflow-y: scroll;
+  font-family: 'Bebas Neue', cursive;
+  font-size: xx-large;
+  width: 33%;
+  background-color: rgb(191, 191, 191);
+}
+#Genres h3 {
+  text-align: center;
+  margin: auto;
+  width: 44%;
+}
+.option {
+  display:inline-block;
+  vertical-align:middle;
+  font-family: 'Signika Negative', sans-serif;
+  font-size: large;
+}
+.fa-folder-open {
+  size: 5px;
+}
+
+#Playlists {
+  position: relative;
+  float: right;
+  margin-top: 20px;
+  margin-right: 18px;
+  border-style: solid;
+  border-color: black;
+  height: 200px;
+  font-size: medium;
+  width: 23%;
+  overflow-y: scroll;
+  font-family: 'Bebas Neue', cursive;
+  font-size: xx-large;
+  background-color: rgb(191, 191, 191);
+}
+#Playlists h3 {
+  text-align: center;
+  margin: auto;
+  width: 50%;
+}
+
+.Songs {
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+  height: 300px;
+  text-align: center;
+ overflow-y: scroll;
+}
+
+table {
+  /* font-family: Arial, Helvetica, sans-serif; */
+  border-collapse: collapse;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+
+.trackth {
+  width: 25%;
+  overflow-x: scroll;
+  border: 1px solid #ddd;
+  font-family: 'Bebas Neue', cursive;
+}
+.artistth {
+  width: 25%;
+  overflow-x: scroll;
+}
+.albumth {
+  width: 25%;
+  overflow-x: scroll;
+  border: 1px solid #ddd;
+}
+.durationth {
+  width: 15%;
+  overflow-x: scroll;
+  border: 1px solid #ddd;
+}
+.queueUp {
+  width: 20%;
+  overflow-x: scroll;
+  border: 1px solid #ddd;
+  background-color:#44c767
+}
+table td {
+  height: 50px;
+  font-family: 'Signika Negative', sans-serif;
+}
+#queuebtn {
+  background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcomplex-res.cloudinary.com%2Fimages%2Fc_crop%2Ch_920%2Cw_1227%2Cx_313%2Cy_0%2Fc_limit%2Cf_auto%2Cfl_lossy%2Cq_auto%2Cw_1030%2Fryd9nmid8thz3xe4vda8%2Fspotify-logo&f=1&nofb=1');
+  background-size: 65px;
+  background-position-x: center;
+  background-repeat: no-repeat;
+  background-position-y: center;
+  background-color: black;
+  height: 50px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  text-align: center;
+  background-color: rgb(26, 24, 24);
+  color: white;
+}
+.container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+.main-wrapper {
+  padding-left: 15px;
+  align-items: center;
+  display: flex;
+  height: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+.main-container {
+  flex: 1;
+}
+
+.buttons {
+  position: relative;
+  top: -120px;
+  display: flex;
+  align-items: center;
+}
+
+.now-playing__name {
+  font-size: 1.5em;
+  margin-bottom: 0.2em;
+}
+
+.now-playing__artist {
+     margin-bottom: 1em;
+    font-size: 40px;
+}
+b {
+  position: absolute;
+  top: 230px;
+}
+.now-playing__status {
+  margin-bottom: 1em;
+}
+
+.now-playing__cover {
+  position: absolute;
+  border-radius: 8px;
+  /* float: left; */
+  margin-right: 10px;
+  text-align: right;
+  width: 200px;
+  height: 200px;
+  top: -5%;
+  left: 25%;
+}
+/*     position: absolute;
+    top: 250px;
+    display: flex;
+    left: 45%; */
+.now-playing__side {
+  position: relative;
+  top: -90px;
+  align-items: center;
+}
+
+.btn-spotify {
+  background-color:#44c767;
+  border-radius:28px;
+  border:1px solid #18ab29;
+  display:flex;
+  justify-content: center;
+  cursor:pointer;
+  color:#ffffff;
+  font-family: 'Signika Negative', sans-serif;
+  font-size:12px;
+  padding:16px 31px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #2f6627;
+}
+.btn-spotify:active {
+  position:relative;
+  top:1px;
+}
+
+img { background: transparent; }
+
+#myBtn {
+  position: fixed;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: #f1f1f1;
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+#myBtn:hover {
+  background: #ddd;
+  color: black;
+}
+.nav {
+display: inline;
+background-color: rgb(94, 94, 94);
+width: 100%;
+}

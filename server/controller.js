@@ -1,11 +1,11 @@
 var router = require('express').Router();
 var axios = require('axios');
 const spotify = require('../config.js');
-
+const request = require('request')
 // host to api calls
 //? Login Auth
 global.access_token = ''
-var spotify_redirect_uri = 'http://localhost:8888/auth/callback'
+var spotify_redirect_uri = 'http://localhost:3455/auth/callback'
 
 var spotify_client_id = spotify.ClientId
 var spotify_client_secret = spotify.ClientSecret
@@ -53,27 +53,44 @@ router.get('/auth/callback', (req, res) => {
     json: true
   };
 console.log('redirecting')
-  axios.post(authOptions)
-  .then(response => {
-    if (!error && response.statusCode === 200) {
-      access_token = response.body.access_token;
-      res.redirect('/')
+
+request.post(authOptions, function(error, response, body) {
+  if (!error && response.statusCode === 200) {
+    access_token = body.access_token;
+    console.log(access_token)
+    res.redirect('/')
+  }
+});
+})
+
+router.get('/auth/token', (req, res) => {
+  res.send(access_token)
+});
+
+
+router.post('/playingSong/:token&:currSong&:device_id', (req, res) => {
+  console.log(req.params)
+  axios(`https://api.spotify.com/v1/me/player/queue?uri=${req.params.currSong}&device_id=${req.params.device_id}`, {
+    method: 'POST',
+    headers: {
+      'Authorization' : 'Bearer ' + req.params.token,
+      // 'Accept': 'application/json',
+      "Content-Type": "application/json"
     }
+  })
+  .then(response => {
+    res.send(response)
   })
   .catch(err => {
     res.send(err)
   })
-
-})
-
-router.get('/auth/token', (req, res) => {
-  res.send({access_token})
 })
 
 
 router.get('/token', (req, res) => {
   console.log('getting token')
   axios('https://accounts.spotify.com/api/token', {
+    method: 'POST',
       headers: {
         'Content-Type' : 'application/x-www-form-urlencoded',
         'Authorization' : 'Basic ' + Buffer.from(spotify.ClientId + ':' + spotify.ClientSecret).toString('base64'),
@@ -102,13 +119,13 @@ router.get('/genres/:token', (req, res) => {
   })
 });
 router.get('/playlists/:token&:genre', (req, res) => {
-  console.log('params', req.params, req.query)
+  //console.log('params', req.params, req.query)
   axios(`https://api.spotify.com/v1/browse/categories/${req.params.genre}/playlists?limit=10`, {
     method: 'GET',
     headers: { 'Authorization' : 'Bearer ' + req.params.token}
   })
   .then(playlistResponse => {
-    console.log('PLAYLIST resp', playlistResponse.data.playlists.items)
+    //console.log('PLAYLIST resp', playlistResponse.data.playlists.items)
     res.send(playlistResponse.data.playlists.items)
   })
   .catch(err => {
@@ -125,7 +142,7 @@ router.get('/songs/:token&:playlist', (req, res) => {
     }
   })
   .then(songsResponse => {
-    console.log('Songs resp', songsResponse.data)
+    //console.log('Songs resp', songsResponse.data)
     res.send(songsResponse.data)
   })
   .catch(err => {

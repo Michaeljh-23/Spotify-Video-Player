@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(routes);
 
 app.use(cors({
-  origin: 'https://localhost3455',
+  origin: 'http://localhost3455',
   methods: ['GET'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   maxAge: 600
