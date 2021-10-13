@@ -18,20 +18,20 @@ const SongModal = props => {
     //? ClassnameOptions = Genres / Playlists / Songs
     <div className={props.label}>
       <label className="modalLabel"></label>
-      <div key={0}>
+      <div>
              {props.list.map((item, idx) => <div>
-               <table key={idx} value={item.track.id}>
+               <table value={item.track.id}>
                  <thead>
                    <tr>
                      <th className='trackth'>Track</th>
                      <th className='artistth'>Artist</th>
                      <th className='albumth'>Album</th>
                      <th className='durationth'>Duration</th>
-                     <th className='queueUp'>Queue up</th>
+                     <th className='queueUp'>Play Track</th>
                    </tr>
                  </thead>
                  <tbody>
-                   <tr>
+                   <tr key={idx}>
                      <td>{item.track.name}</td>
                      <td>{item.track.artists[0].name}</td>
                      <td>{item.track.album.name}</td>

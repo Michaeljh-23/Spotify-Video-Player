@@ -16,7 +16,7 @@ class App extends React.Component {
       playlists: [],
       currPlaylist: [],
       songs: [],
-      currSong: [],
+      currSong: {track: [], currGenre: null},
       player: '',
       playlistShow: false,
       songShow: false
@@ -45,7 +45,8 @@ class App extends React.Component {
   genreUpdate = genre => {
     this.setState({
       currGenre: genre,
-      playlistShow: true
+      playlistShow: true,
+      songShow: false
     });
 
     axios(`/playlists/${this.state.token}&${genre}`)
@@ -77,7 +78,7 @@ class App extends React.Component {
     const trackDetails = currentSong.filter(t => t.track.id === song);
 
     this.setState({
-      currSong: trackDetails[0].track
+      currSong: {track: trackDetails[0].track, currGenre: this.state.currGenre}
     })
 
 
@@ -94,9 +95,10 @@ class App extends React.Component {
         <Login />
       )
     } else {
+      console.log(this.state.currSong)
       return (
         <div className="videoPlayerX">
-          <VideoPlayer genre={this.state.currGenre} />
+          <VideoPlayer genre={this.state.currSong.currGenre} />
 
         <div className="appwrap">
           {/* <div className='nav'></div> */}
@@ -107,10 +109,10 @@ class App extends React.Component {
             : null}
           <br></br>
           {this.state.songShow ?
-            <SongModal id='tracks' update={this.songUpdate} label="Songs" list={this.state.songs} currItem={this.state.currSong} />
+            <SongModal id='tracks' update={this.songUpdate} label="Songs" list={this.state.songs} currItem={this.state.currSong.currSong} />
             : null}
           <br></br>
-          <SongPlayer id='player' token={this.state.token} currSong={this.state.currSong} />
+          <SongPlayer id='player' token={this.state.token} currSong={this.state.currSong.track} />
 
         </div>
             </div>

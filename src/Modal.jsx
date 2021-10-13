@@ -9,9 +9,9 @@ const Modal = props => {
     //? ClassnameOptions = Genres / Playlists / Songs
     <div id={props.label}>
       <h3 className="modalLabel">{props.label}</h3>
-      <div key={0}>
+      <div>
              {props.list.map((item, idx) => <div><FontAwesome
-             className="fa-folder-open" name="folder-open"/><option className="option" key={idx + 1} value={props.currItem} onClick={updatedOnClick} value={item.id}> {item.name}</option></div>)}
+             className="fa-folder-open" name="folder-open"/><option className="option" key={idx + 1} value={props.currItem} onClick={updatedOnClick} value={item.id}>{item.name}</option></div>)}
       </div>
     </div>
 );

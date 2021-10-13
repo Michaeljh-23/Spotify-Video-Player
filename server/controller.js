@@ -48,19 +48,19 @@ router.get('/auth/callback', (req, res) => {
     },
     headers: {
       'Authorization': 'Basic ' + (Buffer.from(spotify_client_id + ':' + spotify_client_secret).toString('base64')),
-      'Content-Type' : 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded'
     },
     json: true
   };
-console.log('redirecting')
+  console.log('redirecting')
 
-request.post(authOptions, function(error, response, body) {
-  if (!error && response.statusCode === 200) {
-    access_token = body.access_token;
-    console.log(access_token)
-    res.redirect('/')
-  }
-});
+  request.post(authOptions, function (error, response, body) {
+    if (!error && response.statusCode === 200) {
+      access_token = body.access_token;
+      console.log(access_token)
+      res.redirect('/')
+    }
+  });
 })
 
 router.get('/auth/token', (req, res) => {
@@ -73,17 +73,30 @@ router.post('/playingSong/:token&:currSong&:device_id', (req, res) => {
   axios(`https://api.spotify.com/v1/me/player/queue?uri=${req.params.currSong}&device_id=${req.params.device_id}`, {
     method: 'POST',
     headers: {
-      'Authorization' : 'Bearer ' + req.params.token,
+      'Authorization': 'Bearer ' + req.params.token,
       // 'Accept': 'application/json',
       "Content-Type": "application/json"
     }
   })
-  .then(response => {
-    res.send(response)
-  })
-  .catch(err => {
-    res.send(err)
-  })
+    .then(response => {
+      axios(`https://api.spotify.com/v1/me/player/next?device_id=${req.params.device_id}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + req.params.token,
+          // 'Accept': 'application/json',
+          "Content-Type": "application/json"
+        }
+      })
+        .then(response => {
+          res.send(response)
+        })
+        .catch(err => {
+          res.send(err)
+        })
+    })
+    .catch(err => {
+      res.send(err)
+    })
 })
 
 
@@ -91,13 +104,13 @@ router.get('/token', (req, res) => {
   console.log('getting token')
   axios('https://accounts.spotify.com/api/token', {
     method: 'POST',
-      headers: {
-        'Content-Type' : 'application/x-www-form-urlencoded',
-        'Authorization' : 'Basic ' + Buffer.from(spotify.ClientId + ':' + spotify.ClientSecret).toString('base64'),
-      },
-      data: 'grant_type=client_credentials',
-      method: 'POST'
-    })
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic ' + Buffer.from(spotify.ClientId + ':' + spotify.ClientSecret).toString('base64'),
+    },
+    data: 'grant_type=client_credentials',
+    method: 'POST'
+  })
     .then(tokenResponse => {
       res.send(tokenResponse.data.access_token);
     })
@@ -109,45 +122,67 @@ router.get('/genres/:token', (req, res) => {
 
   axios('https://api.spotify.com/v1/browse/categories?locale=US', {
     method: 'GET',
-    headers: { 'Authorization' : 'Bearer ' + req.params.token}
+    headers: { 'Authorization': 'Bearer ' + req.params.token }
   })
-  .then (genreResponse => {
-    res.send(genreResponse.data.categories)
-  })
-  .catch(err => {
-    res.send(err)
-  })
+    .then(genreResponse => {
+      res.send(genreResponse.data.categories)
+    })
+    .catch(err => {
+      res.send(err)
+    })
 });
 router.get('/playlists/:token&:genre', (req, res) => {
   //console.log('params', req.params, req.query)
   axios(`https://api.spotify.com/v1/browse/categories/${req.params.genre}/playlists?limit=10`, {
     method: 'GET',
-    headers: { 'Authorization' : 'Bearer ' + req.params.token}
+    headers: { 'Authorization': 'Bearer ' + req.params.token }
   })
-  .then(playlistResponse => {
-    //console.log('PLAYLIST resp', playlistResponse.data.playlists.items)
-    res.send(playlistResponse.data.playlists.items)
-  })
-  .catch(err => {
-    console.log(err)
-    res.send(err)
-  })
+    .then(playlistResponse => {
+      //console.log('PLAYLIST resp', playlistResponse.data.playlists.items)
+      res.send(playlistResponse.data.playlists.items)
+    })
+    .catch(err => {
+      console.log(err)
+      res.send(err)
+    })
 })
 
 router.get('/songs/:token&:playlist', (req, res) => {
   axios(`https://api.spotify.com/v1/playlists/${req.params.playlist}/tracks?limit=10`, {
     method: 'GET',
     headers: {
-      'Authorization' : 'Bearer ' + req.params.token
+      'Authorization': 'Bearer ' + req.params.token
     }
   })
-  .then(songsResponse => {
-    //console.log('Songs resp', songsResponse.data)
-    res.send(songsResponse.data)
-  })
-  .catch(err => {
-    console.log(err)
-    res.send(err)
-  })
+    .then(songsResponse => {
+      //console.log('Songs resp', songsResponse.data)
+      res.send(songsResponse.data)
+    })
+    .catch(err => {
+      console.log(err)
+      res.send(err)
+    })
 })
+// router.put('/playingSong/:token&:currSong&:device_id', (req, res) => {
+//   console.log(req.params)
+//   axios(`https://api.spotify.com/v1/me/player/play?uri=${req.params.currSong}&device_id=${req.params.device_id}`, {
+//     method: 'PUT',
+//     // body: JSON.stringify({uris: [req.params.currSong]}),
+//     headers: {
+//       'Authorization' : 'Bearer ' + req.params.token,
+//       // 'Accept': 'application/json',
+//       "Content-Type": "application/json"
+//     }
+//   })
+//   .then(response => {
+//     res.send(response)
+//   })
+//   .catch(err => {
+//     res.send(err)
+//   })
+// })
+
+
+
 module.exports = router;
+
