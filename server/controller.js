@@ -163,24 +163,7 @@ router.get('/songs/:token&:playlist', (req, res) => {
       res.send(err)
     })
 })
-// router.put('/playingSong/:token&:currSong&:device_id', (req, res) => {
-//   console.log(req.params)
-//   axios(`https://api.spotify.com/v1/me/player/play?uri=${req.params.currSong}&device_id=${req.params.device_id}`, {
-//     method: 'PUT',
-//     // body: JSON.stringify({uris: [req.params.currSong]}),
-//     headers: {
-//       'Authorization' : 'Bearer ' + req.params.token,
-//       // 'Accept': 'application/json',
-//       "Content-Type": "application/json"
-//     }
-//   })
-//   .then(response => {
-//     res.send(response)
-//   })
-//   .catch(err => {
-//     res.send(err)
-//   })
-// })
+
 
 
 

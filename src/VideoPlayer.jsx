@@ -51,8 +51,9 @@ const VideoPlayer = props => {
   console.log('get genre', genre)
   if (genre === null || genre === '' || genre === undefined) {
     return (
-      <image alt="stars-startup"
-        src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.spacetelescope.org%2Farchives%2Fimages%2Fscreen%2Fpotw1209a.jpg&f=1&nofb=1" />
+      <div id="blackScreen"></div>
+      // <image alt="stars-startup"
+      //   src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.spacetelescope.org%2Farchives%2Fimages%2Fscreen%2Fpotw1209a.jpg&f=1&nofb=1" />
     )
   } else {
     console.log('src', src[genre])
